@@ -6,22 +6,10 @@
     <title>ezRemedy | Professional Healthcare Portal</title>
     <style>
         /* Base Reset & Typography */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+        body { background-color: #f0f7f7; color: #333333; line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
 
-        body {
-            background-color: #f0f7f7;
-            color: #333333;
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
+        /* Color Variables */
         :root {
             --sea-green: #0f766e;
             --sea-green-light: #14b8a6;
@@ -32,221 +20,57 @@
             --shadow-3d: 0 20px 40px rgba(15, 118, 110, 0.2), 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        header {
-            background-color: var(--white);
-            padding: 1.5rem 5%;
-            box-shadow: var(--shadow-sm);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        /* Layout */
+        header { background-color: var(--white); padding: 1.5rem 5%; box-shadow: var(--shadow-sm); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.75rem; font-weight: 700; color: var(--sea-green); letter-spacing: -0.5px; }
+        main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 3rem 5%; }
+        
+        .portal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; max-width: 1000px; width: 100%; }
 
-        .logo {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--sea-green);
-            letter-spacing: -0.5px;
-        }
+        /* Cards */
+        .card { background: var(--white); padding: 3rem 2rem; border-radius: 12px; text-align: center; box-shadow: var(--shadow-lg); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; border-top: 4px solid var(--white); }
+        .card:hover { transform: translateY(-12px) scale(1.03); box-shadow: var(--shadow-3d); border-top: 4px solid var(--sea-green-light); }
+        .card h2 { color: var(--sea-green-dark); margin-bottom: 1rem; font-size: 1.5rem; }
+        .card p { color: #666; margin-bottom: 2rem; }
 
-        main {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 3rem 5%;
-        }
+        /* Dashboards (Hidden by default) */
+        .dashboard { display: none; width: 100%; max-width: 800px; background: var(--white); padding: 3rem; border-radius: 12px; box-shadow: var(--shadow-lg); border-top: 4px solid var(--sea-green); animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .dashboard-header { border-bottom: 2px solid #f0f7f7; padding-bottom: 1rem; margin-bottom: 2rem; }
+        .dashboard-header h2 { color: var(--sea-green-dark); }
+        
+        /* Lists */
+        .item-list { list-style: none; margin-top: 1.5rem; text-align: left; }
+        .list-item { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 1rem; background: #fafafa; transition: border-color 0.3s; }
+        .list-item:hover { border-color: var(--sea-green-light); }
+        .item-info h4 { color: var(--sea-green-dark); font-size: 1.2rem; }
+        .item-info p { margin-bottom: 0; color: #555; font-size: 0.95rem; }
+        .status-badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; background: #fef3c7; color: #d97706; margin-top: 0.5rem; }
 
-        .portal-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-            max-width: 1000px;
-            width: 100%;
-        }
+        /* Buttons */
+        .btn { background-color: var(--sea-green); color: var(--white); border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; width: 100%; }
+        .btn:hover { background-color: var(--sea-green-dark); transform: translateY(-2px); }
+        .btn-outline { background-color: transparent; color: var(--sea-green); border: 2px solid var(--sea-green); margin-top: 1rem; }
+        .btn-outline:hover { background-color: var(--sea-green); color: var(--white); }
+        .btn-small { width: auto; padding: 0.5rem 1rem; font-size: 0.9rem; }
+        .btn-danger { background-color: #ef4444; margin-left: 0.5rem; }
+        .btn-danger:hover { background-color: #dc2626; }
 
-        .card {
-            background: var(--white);
-            padding: 3rem 2rem;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: var(--shadow-lg);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-            border-top: 4px solid var(--white);
-        }
+        /* Modals */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1000; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content { background: var(--white); padding: 2.5rem; border-radius: 12px; width: 100%; max-width: 450px; transform: scale(0.8) translateY(30px); opacity: 0; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: var(--shadow-3d); position: relative; max-height: 90vh; overflow-y: auto; }
+        .modal-overlay.active .modal-content { transform: scale(1) translateY(0); opacity: 1; }
+        .close-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer; }
+        .modal-title { color: var(--sea-green-dark); margin-bottom: 1.5rem; font-size: 1.5rem; border-bottom: 2px solid #f0f7f7; padding-bottom: 0.5rem; }
 
-        .card:hover {
-            transform: translateY(-12px) scale(1.03);
-            box-shadow: var(--shadow-3d);
-            border-top: 4px solid var(--sea-green-light);
-        }
-
-        .card h2 {
-            color: var(--sea-green-dark);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .card p {
-            color: #666;
-            margin-bottom: 2rem;
-        }
-
-        .btn {
-            background-color: var(--sea-green);
-            color: var(--white);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .btn:hover {
-            background-color: var(--sea-green-dark);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--sea-green);
-            border: 2px solid var(--sea-green);
-            margin-top: 1rem;
-        }
-
-        .btn-outline:hover {
-            background-color: var(--sea-green);
-            color: var(--white);
-        }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 450px;
-            transform: scale(0.8) translateY(30px);
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: var(--shadow-3d);
-            position: relative;
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: #999;
-            cursor: pointer;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: #444;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--sea-green-light);
-            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
-        }
-
-        .modal-title {
-            color: var(--sea-green-dark);
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-            border-bottom: 2px solid #f0f7f7;
-            padding-bottom: 0.5rem;
-        }
-
-        /* Dashboard Styles */
-        #userDashboard {
-            display: none;
-            width: 100%;
-            max-width: 800px;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .doctor-list {
-            list-style: none;
-            margin-top: 1.5rem;
-            text-align: left;
-        }
-
-        .doctor-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            background: #fafafa;
-        }
-
-        .doctor-info h4 {
-            color: var(--sea-green-dark);
-            font-size: 1.2rem;
-        }
-
-        .doctor-info p {
-            margin-bottom: 0;
-            color: #555;
-        }
+        /* Forms */
+        .form-group { margin-bottom: 1.2rem; text-align: left; }
+        .form-group label { display: block; margin-bottom: 0.4rem; font-weight: 500; color: #444; font-size: 0.95rem; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; transition: all 0.3s ease; }
+        .form-group textarea { resize: vertical; min-height: 80px; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--sea-green-light); box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1); }
     </style>
 </head>
 <body>
@@ -260,52 +84,82 @@
         <div class="portal-grid" id="mainPortal">
             <div class="card">
                 <h2>Patient Portal</h2>
-                <p>Access your medical history, browse available doctors, and manage appointments.</p>
-                <button class="btn" onclick="openModal('loginModal', 'User Login')">Login as User</button>
-                <button class="btn btn-outline" onclick="openModal('registerModal', 'User Registration')">Register as User</button>
+                <p>Access your medical history, browse available specialists, and manage appointments.</p>
+                <button class="btn" onclick="openModal('loginUser')">Login as Patient</button>
             </div>
             <div class="card">
-                <h2>Provider Portal</h2>
-                <p>Manage patient records, view pending requests, and organize your schedule.</p>
-                <button class="btn" onclick="openModal('loginModal', 'Doctor Login')">Login as Doctor</button>
+                <h2>Doctor Portal</h2>
+                <p>Manage patient records, view pending requests, and organize your daily schedule.</p>
+                <button class="btn" onclick="openModal('loginDoctor')">Login as Doctor</button>
             </div>
         </div>
 
-        <div id="userDashboard" class="card" style="cursor: default; transform: none; border-top: 4px solid var(--sea-green);">
-            <h2 style="text-align: left;">Welcome, USER1001</h2>
-            <p style="text-align: left;">Browse available specialists and book your appointment below.</p>
+        <div id="userDashboard" class="dashboard">
+            <div class="dashboard-header">
+                <h2>Welcome, USER1001 (Test Patient)</h2>
+                <p>Select a specialist below to fill out an appointment request form.</p>
+            </div>
             
-            <ul class="doctor-list">
-                <li class="doctor-item">
-                    <div class="doctor-info">
+            <ul class="item-list">
+                <li class="list-item">
+                    <div class="item-info">
                         <h4>Dr. Rajesh Kumar</h4>
                         <p>Cardiology | Consultation: Rs. 500</p>
                     </div>
-                    <button class="btn" style="width: auto;" onclick="bookAppointment('DOC5001')">Request Slot</button>
+                    <button class="btn btn-small" onclick="openBookingForm('DOC5001', 'Dr. Rajesh Kumar')">Request Slot</button>
                 </li>
-                <li class="doctor-item">
-                    <div class="doctor-info">
+                <li class="list-item">
+                    <div class="item-info">
                         <h4>Dr. Priya Sharma</h4>
                         <p>Dermatology | Consultation: Rs. 400</p>
                     </div>
-                    <button class="btn" style="width: auto;" onclick="bookAppointment('DOC5002')">Request Slot</button>
-                </li>
-                <li class="doctor-item">
-                    <div class="doctor-info">
-                        <h4>Dr. Vikram Rao</h4>
-                        <p>Neurology | Consultation: Rs. 600</p>
-                    </div>
-                    <button class="btn" style="width: auto;" onclick="bookAppointment('DOC5005')">Request Slot</button>
+                    <button class="btn btn-small" onclick="openBookingForm('DOC5002', 'Dr. Priya Sharma')">Request Slot</button>
                 </li>
             </ul>
-            <button class="btn btn-outline" onclick="logout()" style="width: 200px; margin-top: 2rem;">Logout</button>
+            <button class="btn btn-outline" onclick="logout()" style="width: 150px; margin-top: 2rem;">Logout</button>
+        </div>
+
+        <div id="doctorDashboard" class="dashboard">
+            <div class="dashboard-header">
+                <h2>Dr. Rajesh Kumar's Dashboard</h2>
+                <p>Cardiology | ID: DOC5001</p>
+            </div>
+            
+            <h3 style="color: var(--sea-green); margin-top: 1.5rem;">Pending Requests</h3>
+            <ul class="item-list">
+                <li class="list-item">
+                    <div class="item-info">
+                        <h4>Patient: USER1001 (Test Patient)</h4>
+                        <p><strong>Problem:</strong> Experiencing mild chest palpitations.</p>
+                        <p><strong>Type:</strong> In-Person | <strong>Requested Slot:</strong> 10:00 AM</p>
+                        <span class="status-badge">PENDING APPROVAL</span>
+                    </div>
+                    <div>
+                        <button class="btn btn-small" onclick="alert('Appointment Approved and added to schedule!')">Approve</button>
+                        <button class="btn btn-small btn-danger" onclick="alert('Appointment Rejected.')">Reject</button>
+                    </div>
+                </li>
+            </ul>
+
+            <h3 style="color: var(--sea-green); margin-top: 2.5rem;">Today's Schedule</h3>
+            <ul class="item-list">
+                <li class="list-item">
+                    <div class="item-info">
+                        <h4>Patient: USER0892 (Rahul Verma)</h4>
+                        <p>Follow-up on ECG Report</p>
+                        <p>02:00 PM | Online Consultation</p>
+                    </div>
+                </li>
+            </ul>
+
+            <button class="btn btn-outline" onclick="logout()" style="width: 150px; margin-top: 2rem;">Logout</button>
         </div>
     </main>
 
     <div class="modal-overlay" id="mainOverlay">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()">&times;</button>
-            <h2 class="modal-title" id="modalTitle">Login</h2>
+            <h2 class="modal-title" id="modalTitle">Modal</h2>
             <form id="dynamicForm">
                 </form>
         </div>
@@ -315,39 +169,68 @@
         const overlay = document.getElementById('mainOverlay');
         const modalTitle = document.getElementById('modalTitle');
         const dynamicForm = document.getElementById('dynamicForm');
+        
         const mainPortal = document.getElementById('mainPortal');
         const userDashboard = document.getElementById('userDashboard');
+        const doctorDashboard = document.getElementById('doctorDashboard');
         const headerStatus = document.getElementById('headerStatus');
 
-        function openModal(type, title) {
-            modalTitle.innerText = title;
+        let currentFormType = '';
+
+        function openModal(type) {
+            currentFormType = type;
             dynamicForm.innerHTML = ''; 
 
-            if (type === 'loginModal') {
+            if (type === 'loginUser') {
+                modalTitle.innerText = "Patient Login";
                 dynamicForm.innerHTML = `
-                    <div class="form-group">
-                        <label>ID Number</label>
-                        <input type="text" placeholder="Enter ID (e.g., USER1001)" value="USER1001" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" placeholder="Enter Password" value="password123" required>
-                    </div>
-                    <button type="submit" class="btn">Authenticate</button>
+                    <div class="form-group"><label>User ID</label><input type="text" value="USER1001" required></div>
+                    <div class="form-group"><label>Password</label><input type="password" value="password123" required></div>
+                    <button type="submit" class="btn">Login</button>
                 `;
-            } else if (type === 'registerModal') {
+            } else if (type === 'loginDoctor') {
+                modalTitle.innerText = "Doctor Login";
                 dynamicForm.innerHTML = `
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" placeholder="Enter your full name" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Create Password</label>
-                        <input type="password" placeholder="Create a secure password" required>
-                    </div>
-                    <button type="submit" class="btn">Create Account</button>
+                    <div class="form-group"><label>Doctor ID</label><input type="text" value="DOC5001" required></div>
+                    <div class="form-group"><label>Password</label><input type="password" value="doc123" required></div>
+                    <button type="submit" class="btn">Secure Login</button>
                 `;
             }
+            overlay.classList.add('active');
+        }
+
+        function openBookingForm(docId, docName) {
+            currentFormType = 'bookingForm';
+            modalTitle.innerText = "Book: " + docName;
+            dynamicForm.innerHTML = `
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="patient@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Describe your problem/complaint</label>
+                    <textarea placeholder="Please describe your symptoms..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Consultation Type</label>
+                    <select required>
+                        <option value="Online">Online / Telehealth</option>
+                        <option value="In-Person">In-Person Clinic Visit</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Preferred Time Slot</label>
+                    <select required>
+                        <option value="09:00 AM">09:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="02:00 PM">02:00 PM</option>
+                        <option value="03:00 PM">03:00 PM</option>
+                        <option value="04:00 PM">04:00 PM</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Submit Appointment Request</button>
+            `;
             overlay.classList.add('active');
         }
 
@@ -355,25 +238,33 @@
             overlay.classList.remove('active');
         }
 
-        // SIMULATE THE JAVA BACKEND LOGIN LOGIC
-        document.getElementById('dynamicForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Stop page refresh
+        // Handle Form Submissions based on what form is currently open
+        dynamicForm.addEventListener('submit', function(e) {
+            e.preventDefault();
             closeModal();
             
-            // Hide the login portal and show the dashboard
-            mainPortal.style.display = 'none';
-            userDashboard.style.display = 'block';
-            headerStatus.innerText = "Patient Dashboard - Logged In";
+            if (currentFormType === 'loginUser') {
+                mainPortal.style.display = 'none';
+                doctorDashboard.style.display = 'none';
+                userDashboard.style.display = 'block';
+                headerStatus.innerText = "Patient Dashboard";
+            } 
+            else if (currentFormType === 'loginDoctor') {
+                mainPortal.style.display = 'none';
+                userDashboard.style.display = 'none';
+                doctorDashboard.style.display = 'block';
+                headerStatus.innerText = "Provider Dashboard Active";
+            }
+            else if (currentFormType === 'bookingForm') {
+                setTimeout(() => {
+                    alert("Success! Your medical details and slot request have been sent to the doctor for approval.");
+                }, 300); // slight delay for smooth UI closing
+            }
         });
 
-        // Simulate booking logic
-        function bookAppointment(docId) {
-            alert("Success! Appointment Request REQ1 sent to " + docId + ". Pending Doctor Approval.");
-        }
-
-        // Simulate logout logic
         function logout() {
             userDashboard.style.display = 'none';
+            doctorDashboard.style.display = 'none';
             mainPortal.style.display = 'grid';
             headerStatus.innerText = "Healthcare Services";
         }
