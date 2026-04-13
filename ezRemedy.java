@@ -128,6 +128,7 @@ public class EzRemedy {
     static List<AppointmentRequest> appointmentRequests = new ArrayList<>();
     static List<Appointment> appointments = new ArrayList<>();
     static List<MedicalRecord> medicalRecords = new ArrayList<>();
+    
     static int userCounter = 1000;
     static int doctorCounter = 5000;
     static int requestCounter = 1;
@@ -139,6 +140,8 @@ public class EzRemedy {
 
     public static void main(String[] args) {
         initializeDoctors();
+        initializeUsers(); // We added this line to load the default user!
+        
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
@@ -171,6 +174,13 @@ public class EzRemedy {
             }
         }
         scanner.close();
+    }
+
+    // --- NEW METHOD TO CREATE DEFAULT USER ---
+    static void initializeUsers() {
+        User defaultUser = new User("USER1001", "Test Patient", "9876543210", "password123");
+        users.put("USER1001", defaultUser);
+        userCounter = 1001; // Ensures the next person who registers gets USER1002
     }
 
     static void initializeDoctors() {
