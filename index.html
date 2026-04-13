@@ -3,306 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EzRemedy | Healthcare Access Platform</title>
+    <title>EzRemedy | Unified Healthcare</title>
     <style>
         /* Base Reset & Typography */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
-
-        /* Ambient Background for Glass Refraction */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+        
         body {
-            background: linear-gradient(135deg, #064e3b 0%, #0f766e 50%, #115e59 100%);
+            background: #042f2e;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(15, 118, 110, 0.4) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(20, 184, 166, 0.3) 0px, transparent 50%);
+            background-attachment: fixed;
             color: #ffffff;
             line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
             overflow-x: hidden;
-            position: relative;
+            scroll-behavior: smooth;
         }
 
-        /* Abstract Background Orbs */
-        .ambient-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: -1;
-        }
-        .orb-1 {
-            top: -10%; left: -10%;
-            width: 500px; height: 500px;
-            background: rgba(45, 212, 191, 0.4);
-        }
-        .orb-2 {
-            bottom: -20%; right: -10%;
-            width: 600px; height: 600px;
-            background: rgba(4, 47, 46, 0.6);
-        }
+        /* Typography - Bold & Clean */
+        h1 { font-size: 3.5rem; font-weight: 900; letter-spacing: -1px; line-height: 1.1; margin-bottom: 1.5rem; }
+        h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: #2dd4bf; }
+        h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+        p { font-weight: 500; color: rgba(255, 255, 255, 0.8); font-size: 1.1rem; }
 
-        /* Glassmorphism Core Classes */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-            border-radius: 16px;
-        }
-
-        .glass-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-        }
-
-        .glass-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.3);
-        }
-
-        /* Typography - Strictly Bold & Clean */
-        h1, h2, h3, h4 {
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            color: #ffffff;
-        }
-        
-        p {
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Layout */
+        /* Navigation */
         header {
-            padding: 1.5rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            position: fixed; width: 100%; top: 0; z-index: 100;
+            padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(4, 47, 46, 0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
+        }
+        .logo { font-size: 2rem; font-weight: 900; color: #2dd4bf; letter-spacing: -1px; }
+
+        /* 3D Glassmorphism Core Class */
+        .glass-3d {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.4); /* 3D light edge */
+            border-left: 1px solid rgba(255, 255, 255, 0.3); /* 3D light edge */
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .logo {
-            font-size: 1.75rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: #2dd4bf;
+        /* Sections Layout */
+        .section { min-height: 100vh; padding: 100px 5%; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        
+        /* Hero Section */
+        #hero { flex-direction: row; gap: 4rem; justify-content: space-between; }
+        .hero-text { flex: 1; max-width: 600px; }
+        .hero-image { flex: 1; position: relative; }
+        .hero-image img {
+            width: 100%; border-radius: 24px; object-fit: cover;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            border: 2px solid rgba(45, 212, 191, 0.3);
         }
 
-        main {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 3rem 5%;
-            z-index: 1;
-        }
+        /* Features Section */
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; width: 100%; max-width: 1200px; margin-top: 3rem; }
+        .feature-card { padding: 2.5rem 2rem; text-align: center; }
 
-        .portal-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-            max-width: 1000px;
-            width: 100%;
+        /* Login Portal Section */
+        .portal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; max-width: 1000px; width: 100%; margin-top: 3rem; }
+        .portal-card { padding: 4rem 3rem; text-align: center; cursor: pointer; }
+        
+        /* Magnify Effect on Hover */
+        .portal-card:hover {
+            transform: scale(1.08) translateY(-15px);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
+            border-top: 1px solid rgba(45, 212, 191, 0.8);
+            border-left: 1px solid rgba(45, 212, 191, 0.6);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(45, 212, 191, 0.2);
         }
-
-        .portal-grid .glass-panel {
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-
-        .portal-grid h2 { margin-bottom: 1rem; font-size: 1.8rem; }
-        .portal-grid p { margin-bottom: 2.5rem; }
 
         /* Dashboards */
-        .dashboard {
-            display: none;
-            width: 100%;
-            max-width: 850px;
-            padding: 3rem;
-            animation: fadeIn 0.6s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .dashboard-container { display: none; padding: 120px 5% 50px; min-height: 100vh; align-items: flex-start; justify-content: center; }
+        .dashboard { width: 100%; max-width: 900px; padding: 3rem; animation: slideUp 0.6s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        .dashboard-header {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            padding-bottom: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .dashboard-header h2 { color: #2dd4bf; }
-
-        /* Lists & Items */
+        /* Lists */
         .item-list { list-style: none; margin-top: 1.5rem; }
-        
         .list-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            transition: all 0.3s ease;
+            display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; margin-bottom: 1rem;
+            background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;
+            transition: border-color 0.3s ease;
         }
-        
-        .list-item:hover {
-            background: rgba(0, 0, 0, 0.3);
-            border-color: #2dd4bf;
-        }
-
-        .item-info h4 { font-size: 1.3rem; margin-bottom: 0.25rem; }
-        .item-info p { font-size: 0.95rem; margin-bottom: 0; }
-        
-        .status-badge {
-            display: inline-block;
-            padding: 0.35rem 0.85rem;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            background: rgba(245, 158, 11, 0.2);
-            color: #fcd34d;
-            border: 1px solid rgba(245, 158, 11, 0.4);
-            margin-top: 0.75rem;
-            letter-spacing: 0.5px;
-        }
+        .list-item:hover { border-color: #2dd4bf; background: rgba(0, 0, 0, 0.4); }
+        .item-info h4 { font-size: 1.3rem; color: #fff; }
+        .status-badge { display: inline-block; padding: 0.35rem 0.85rem; border-radius: 6px; font-size: 0.85rem; font-weight: 800; background: rgba(245, 158, 11, 0.2); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.5); margin-top: 0.5rem; }
 
         /* Buttons */
         .btn {
-            background: rgba(45, 212, 191, 0.8);
-            color: #042f2e;
-            border: 1px solid rgba(45, 212, 191, 0.5);
-            padding: 0.85rem 1.5rem;
-            border-radius: 8px;
-            font-size: 1.05rem;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background: #2dd4bf; color: #042f2e; border: none; padding: 1rem 2rem; border-radius: 8px;
+            font-size: 1.1rem; font-weight: 800; cursor: pointer; transition: all 0.3s ease; width: 100%; text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(45, 212, 191, 0.3);
         }
-
-        .btn:hover {
-            background: rgba(45, 212, 191, 1);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(45, 212, 191, 0.4);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: #2dd4bf;
-            border: 2px solid #2dd4bf;
-            margin-top: 1rem;
-        }
-
-        .btn-outline:hover {
-            background: #2dd4bf;
-            color: #042f2e;
-        }
-
+        .btn:hover { background: #14b8a6; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(45, 212, 191, 0.5); }
+        .btn-outline { background: transparent; color: #2dd4bf; border: 2px solid #2dd4bf; margin-top: 1rem; }
+        .btn-outline:hover { background: #2dd4bf; color: #042f2e; }
         .btn-small { width: auto; padding: 0.6rem 1.2rem; font-size: 0.9rem; }
-        .btn-danger { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border-color: #ef4444; margin-left: 0.5rem; }
+        .btn-danger { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid #ef4444; margin-left: 0.5rem; box-shadow: none;}
         .btn-danger:hover { background: #ef4444; color: #fff; }
 
         /* Modals */
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1000;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px);
+            display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1000;
         }
         .modal-overlay.active { opacity: 1; visibility: visible; }
-        
-        .modal-content {
-            padding: 3rem;
-            width: 100%;
-            max-width: 500px;
-            transform: scale(0.9) translateY(20px);
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
+        .modal-content { padding: 3rem; width: 100%; max-width: 500px; transform: scale(0.9) translateY(20px); opacity: 0; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .modal-overlay.active .modal-content { transform: scale(1) translateY(0); opacity: 1; }
-        
-        .close-btn {
-            position: absolute; top: 1.5rem; right: 1.5rem;
-            background: none; border: none; font-size: 1.8rem;
-            color: rgba(255, 255, 255, 0.6); cursor: pointer; font-weight: 300;
-        }
+        .close-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: rgba(255, 255, 255, 0.5); cursor: pointer; }
         .close-btn:hover { color: #fff; }
-        
-        .modal-title {
-            color: #2dd4bf;
-            margin-bottom: 2rem;
-            font-size: 1.8rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            padding-bottom: 1rem;
-        }
 
-        /* Glass Forms */
+        /* Forms */
         .form-group { margin-bottom: 1.5rem; text-align: left; }
-        .form-group label {
-            display: block; margin-bottom: 0.5rem;
-            font-weight: 700; color: rgba(255, 255, 255, 0.9);
-            font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;
-        }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 800; color: #2dd4bf; font-size: 0.9rem; text-transform: uppercase; }
         .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 1rem;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px; font-size: 1rem; color: #fff;
-            transition: all 0.3s ease;
+            width: 100%; padding: 1rem; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; font-size: 1rem; color: #fff; transition: all 0.3s ease;
         }
-        .form-group textarea { resize: vertical; min-height: 100px; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            outline: none; border-color: #2dd4bf;
-            background: rgba(0, 0, 0, 0.4);
-            box-shadow: 0 0 0 2px rgba(45, 212, 191, 0.2);
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #2dd4bf; background: rgba(0, 0, 0, 0.5); box-shadow: 0 0 0 2px rgba(45, 212, 191, 0.2); }
+        .form-group option { background: #042f2e; color: #fff; }
+
+        /* Scroll Animations */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Responsive */
+        @media(max-width: 900px) {
+            #hero { flex-direction: column; text-align: center; padding-top: 150px; }
+            .features-grid, .portal-grid { grid-template-columns: 1fr; }
+            .list-item { flex-direction: column; gap: 1rem; align-items: flex-start; }
         }
-        .form-group option { background: #064e3b; color: #fff; }
-        ::placeholder { color: rgba(255, 255, 255, 0.4); }
     </style>
 </head>
 <body>
 
-    <div class="ambient-orb orb-1"></div>
-    <div class="ambient-orb orb-2"></div>
-
     <header>
         <div class="logo">EzRemedy</div>
-        <div style="font-weight: 700; color: rgba(255,255,255,0.7); letter-spacing: 1px;" id="headerStatus">SYSTEM STANDBY</div>
+        <div style="font-weight: 800; color: rgba(255,255,255,0.6);" id="headerStatus">SECURE HEALTH NETWORK</div>
     </header>
 
-    <main>
-        <div class="portal-grid" id="mainPortal">
-            <div class="glass-panel glass-card">
-                <h2>PATIENT PORTAL</h2>
-                <p>Access your medical history, browse available specialists, and manage appointments.</p>
-                <button class="btn" onclick="openModal('loginUser')">AUTHENTICATE PATIENT</button>
+    <div id="landingPage">
+        
+        <section id="hero" class="section">
+            <div class="hero-text reveal active">
+                <h1>Healthcare,<br>Simplified.</h1>
+                <p style="margin-bottom: 2rem;">Skip the waiting room. Connect with top specialists, manage your medical history, and book appointments instantly through our secure platform.</p>
+                <button class="btn" onclick="document.getElementById('portal').scrollIntoView();" style="width: auto;">ACCESS PORTALS</button>
             </div>
-            <div class="glass-panel glass-card">
-                <h2>DOCTOR PORTAL</h2>
-                <p>Manage patient records, view pending requests, and organize your daily schedule.</p>
-                <button class="btn btn-outline" onclick="openModal('loginDoctor')">AUTHENTICATE PROVIDER</button>
+            <div class="hero-image reveal active">
+                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80" alt="Medical Professional">
             </div>
-        </div>
+        </section>
 
-        <div id="userDashboard" class="dashboard glass-panel">
+        <section id="features" class="section" style="background: rgba(0,0,0,0.1);">
+            <h2 class="reveal">Why Choose EzRemedy?</h2>
+            <div class="features-grid">
+                <div class="feature-card glass-3d reveal">
+                    <h3>Smart Booking</h3>
+                    <p>Instantly view available time slots for specialists and book without phone calls.</p>
+                </div>
+                <div class="feature-card glass-3d reveal">
+                    <h3>Digital Records</h3>
+                    <p>Your complete medical history and prescriptions stored securely in one place.</p>
+                </div>
+                <div class="feature-card glass-3d reveal">
+                    <h3>Verified Doctors</h3>
+                    <p>Connect only with certified professionals for online or in-person visits.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="portal" class="section">
+            <h2 class="reveal">Secure Access Portals</h2>
+            <p class="reveal">Select your role to authenticate with the backend system.</p>
+            <div class="portal-grid">
+                <div class="portal-card glass-3d reveal" onclick="openModal('loginUser')">
+                    <h2>PATIENT LOGIN</h2>
+                    <p>Access your medical history, browse available specialists, and manage appointments.</p>
+                    <button class="btn">AUTHENTICATE</button>
+                </div>
+                <div class="portal-card glass-3d reveal" onclick="openModal('loginDoctor')">
+                    <h2>PROVIDER LOGIN</h2>
+                    <p>Manage patient records, view pending requests, and organize your daily schedule.</p>
+                    <button class="btn btn-outline">AUTHENTICATE</button>
+                </div>
+            </div>
+        </section>
+
+    </div> <div id="userDashboard" class="dashboard-container">
+        <div class="dashboard glass-3d">
             <div class="dashboard-header">
                 <h2>WELCOME, USER1001 (TEST PATIENT)</h2>
                 <p>Select a specialist below to fill out an appointment request form.</p>
@@ -326,8 +218,10 @@
             </ul>
             <button class="btn btn-outline" onclick="logout()" style="width: 200px; margin-top: 2rem;">TERMINATE SESSION</button>
         </div>
+    </div>
 
-        <div id="doctorDashboard" class="dashboard glass-panel">
+    <div id="doctorDashboard" class="dashboard-container">
+        <div class="dashboard glass-3d">
             <div class="dashboard-header">
                 <h2>DR. RAJESH KUMAR'S DASHBOARD</h2>
                 <p>CARDIOLOGY | ID: DOC5001</p>
@@ -362,10 +256,10 @@
 
             <button class="btn btn-outline" onclick="logout()" style="width: 200px; margin-top: 2rem;">TERMINATE SESSION</button>
         </div>
-    </main>
+    </div>
 
     <div class="modal-overlay" id="mainOverlay">
-        <div class="modal-content glass-panel">
+        <div class="modal-content glass-3d">
             <button class="close-btn" onclick="closeModal()">&times;</button>
             <h2 class="modal-title" id="modalTitle">MODAL</h2>
             <form id="dynamicForm">
@@ -374,11 +268,27 @@
     </div>
 
     <script>
+        // Scroll Reveal Animation Logic
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Trigger on load
+
+        // App Logic
         const overlay = document.getElementById('mainOverlay');
         const modalTitle = document.getElementById('modalTitle');
         const dynamicForm = document.getElementById('dynamicForm');
         
-        const mainPortal = document.getElementById('mainPortal');
+        const landingPage = document.getElementById('landingPage');
         const userDashboard = document.getElementById('userDashboard');
         const doctorDashboard = document.getElementById('doctorDashboard');
         const headerStatus = document.getElementById('headerStatus');
@@ -446,21 +356,23 @@
             overlay.classList.remove('active');
         }
 
-        // Handle Form Submissions based on what form is currently open
+        // Handle Form Submissions
         dynamicForm.addEventListener('submit', function(e) {
             e.preventDefault();
             closeModal();
             
             if (currentFormType === 'loginUser') {
-                mainPortal.style.display = 'none';
+                landingPage.style.display = 'none';
                 doctorDashboard.style.display = 'none';
-                userDashboard.style.display = 'block';
+                userDashboard.style.display = 'flex';
+                window.scrollTo(0,0);
                 headerStatus.innerText = "PATIENT DASHBOARD ACTIVE";
             } 
             else if (currentFormType === 'loginDoctor') {
-                mainPortal.style.display = 'none';
+                landingPage.style.display = 'none';
                 userDashboard.style.display = 'none';
-                doctorDashboard.style.display = 'block';
+                doctorDashboard.style.display = 'flex';
+                window.scrollTo(0,0);
                 headerStatus.innerText = "PROVIDER DASHBOARD ACTIVE";
             }
             else if (currentFormType === 'bookingForm') {
@@ -473,8 +385,9 @@
         function logout() {
             userDashboard.style.display = 'none';
             doctorDashboard.style.display = 'none';
-            mainPortal.style.display = 'grid';
-            headerStatus.innerText = "SYSTEM STANDBY";
+            landingPage.style.display = 'block';
+            headerStatus.innerText = "SECURE HEALTH NETWORK";
+            window.scrollTo(0,0);
         }
     </script>
 </body>
