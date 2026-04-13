@@ -22,7 +22,6 @@
             flex-direction: column;
         }
 
-        /* Color Variables */
         :root {
             --sea-green: #0f766e;
             --sea-green-light: #14b8a6;
@@ -33,7 +32,6 @@
             --shadow-3d: 0 20px 40px rgba(15, 118, 110, 0.2), 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        /* Header Navigation */
         header {
             background-color: var(--white);
             padding: 1.5rem 5%;
@@ -50,7 +48,6 @@
             letter-spacing: -0.5px;
         }
 
-        /* Main Container */
         main {
             flex: 1;
             display: flex;
@@ -67,7 +64,6 @@
             width: 100%;
         }
 
-        /* 3D Float Cards */
         .card {
             background: var(--white);
             padding: 3rem 2rem;
@@ -79,7 +75,6 @@
             border-top: 4px solid var(--white);
         }
 
-        /* 3D Hover Effect */
         .card:hover {
             transform: translateY(-12px) scale(1.03);
             box-shadow: var(--shadow-3d);
@@ -127,7 +122,6 @@
             color: var(--white);
         }
 
-        /* Modal / Pop-up Styles */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -177,14 +171,8 @@
             font-size: 1.5rem;
             color: #999;
             cursor: pointer;
-            transition: color 0.2s ease;
         }
 
-        .close-btn:hover {
-            color: #333;
-        }
-
-        /* Form Styling */
         .form-group {
             margin-bottom: 1.5rem;
             text-align: left;
@@ -197,16 +185,16 @@
             color: #444;
         }
 
-        .form-group input, .form-group select, .form-group textarea {
+        .form-group input {
             width: 100%;
             padding: 0.75rem;
             border: 1px solid #ccc;
             border-radius: 6px;
             font-size: 1rem;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
         }
 
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+        .form-group input:focus {
             outline: none;
             border-color: var(--sea-green-light);
             box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
@@ -219,29 +207,98 @@
             border-bottom: 2px solid #f0f7f7;
             padding-bottom: 0.5rem;
         }
+
+        /* Dashboard Styles */
+        #userDashboard {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .doctor-list {
+            list-style: none;
+            margin-top: 1.5rem;
+            text-align: left;
+        }
+
+        .doctor-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background: #fafafa;
+        }
+
+        .doctor-info h4 {
+            color: var(--sea-green-dark);
+            font-size: 1.2rem;
+        }
+
+        .doctor-info p {
+            margin-bottom: 0;
+            color: #555;
+        }
     </style>
 </head>
 <body>
 
     <header>
         <div class="logo">ezRemedy</div>
-        <div style="font-weight: 500; color: #666;">Healthcare Services</div>
+        <div style="font-weight: 500; color: #666;" id="headerStatus">Healthcare Services</div>
     </header>
 
     <main>
-        <div class="portal-grid">
+        <div class="portal-grid" id="mainPortal">
             <div class="card">
                 <h2>Patient Portal</h2>
                 <p>Access your medical history, browse available doctors, and manage appointments.</p>
                 <button class="btn" onclick="openModal('loginModal', 'User Login')">Login as User</button>
                 <button class="btn btn-outline" onclick="openModal('registerModal', 'User Registration')">Register as User</button>
             </div>
-
             <div class="card">
                 <h2>Provider Portal</h2>
                 <p>Manage patient records, view pending requests, and organize your schedule.</p>
                 <button class="btn" onclick="openModal('loginModal', 'Doctor Login')">Login as Doctor</button>
             </div>
+        </div>
+
+        <div id="userDashboard" class="card" style="cursor: default; transform: none; border-top: 4px solid var(--sea-green);">
+            <h2 style="text-align: left;">Welcome, USER1001</h2>
+            <p style="text-align: left;">Browse available specialists and book your appointment below.</p>
+            
+            <ul class="doctor-list">
+                <li class="doctor-item">
+                    <div class="doctor-info">
+                        <h4>Dr. Rajesh Kumar</h4>
+                        <p>Cardiology | Consultation: Rs. 500</p>
+                    </div>
+                    <button class="btn" style="width: auto;" onclick="bookAppointment('DOC5001')">Request Slot</button>
+                </li>
+                <li class="doctor-item">
+                    <div class="doctor-info">
+                        <h4>Dr. Priya Sharma</h4>
+                        <p>Dermatology | Consultation: Rs. 400</p>
+                    </div>
+                    <button class="btn" style="width: auto;" onclick="bookAppointment('DOC5002')">Request Slot</button>
+                </li>
+                <li class="doctor-item">
+                    <div class="doctor-info">
+                        <h4>Dr. Vikram Rao</h4>
+                        <p>Neurology | Consultation: Rs. 600</p>
+                    </div>
+                    <button class="btn" style="width: auto;" onclick="bookAppointment('DOC5005')">Request Slot</button>
+                </li>
+            </ul>
+            <button class="btn btn-outline" onclick="logout()" style="width: 200px; margin-top: 2rem;">Logout</button>
         </div>
     </main>
 
@@ -249,31 +306,32 @@
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()">&times;</button>
             <h2 class="modal-title" id="modalTitle">Login</h2>
-            
             <form id="dynamicForm">
                 </form>
         </div>
     </div>
 
     <script>
-        // Modal Logic
         const overlay = document.getElementById('mainOverlay');
         const modalTitle = document.getElementById('modalTitle');
         const dynamicForm = document.getElementById('dynamicForm');
+        const mainPortal = document.getElementById('mainPortal');
+        const userDashboard = document.getElementById('userDashboard');
+        const headerStatus = document.getElementById('headerStatus');
 
         function openModal(type, title) {
             modalTitle.innerText = title;
-            dynamicForm.innerHTML = ''; // Clear previous form
+            dynamicForm.innerHTML = ''; 
 
             if (type === 'loginModal') {
                 dynamicForm.innerHTML = `
                     <div class="form-group">
                         <label>ID Number</label>
-                        <input type="text" placeholder="Enter ID (e.g., USER1001 or DOC5001)" required>
+                        <input type="text" placeholder="Enter ID (e.g., USER1001)" value="USER1001" required>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" placeholder="Enter Password" required>
+                        <input type="password" placeholder="Enter Password" value="password123" required>
                     </div>
                     <button type="submit" class="btn">Authenticate</button>
                 `;
@@ -284,17 +342,12 @@
                         <input type="text" placeholder="Enter your full name" required>
                     </div>
                     <div class="form-group">
-                        <label>Phone Number</label>
-                        <input type="tel" placeholder="Enter your phone number" required>
-                    </div>
-                    <div class="form-group">
                         <label>Create Password</label>
                         <input type="password" placeholder="Create a secure password" required>
                     </div>
                     <button type="submit" class="btn">Create Account</button>
                 `;
             }
-
             overlay.classList.add('active');
         }
 
@@ -302,20 +355,28 @@
             overlay.classList.remove('active');
         }
 
-        // Close modal if user clicks outside the modal content window
-        window.onclick = function(event) {
-            if (event.target === overlay) {
-                closeModal();
-            }
+        // SIMULATE THE JAVA BACKEND LOGIN LOGIC
+        document.getElementById('dynamicForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Stop page refresh
+            closeModal();
+            
+            // Hide the login portal and show the dashboard
+            mainPortal.style.display = 'none';
+            userDashboard.style.display = 'block';
+            headerStatus.innerText = "Patient Dashboard - Logged In";
+        });
+
+        // Simulate booking logic
+        function bookAppointment(docId) {
+            alert("Success! Appointment Request REQ1 sent to " + docId + ". Pending Doctor Approval.");
         }
 
-        // Prevent form submission from refreshing the page during UI testing
-        document.getElementById('dynamicForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert("This connects to the Java backend processing.");
-            closeModal();
-        });
+        // Simulate logout logic
+        function logout() {
+            userDashboard.style.display = 'none';
+            mainPortal.style.display = 'grid';
+            headerStatus.innerText = "Healthcare Services";
+        }
     </script>
-
 </body>
 </html>
