@@ -3,11 +3,11 @@ import java.time.*;
 import java.util.*;
 
 public class EzRemedy {
-    // --- UPDATED: Added email field ---
+
     static class User {
         String userId;
         String name;
-        String email; 
+        String email;
         String phone;
         String password;
         String problem;
@@ -63,7 +63,6 @@ public class EzRemedy {
         }
     }
 
-    // --- UPDATED: Added email and requestedTime fields ---
     static class AppointmentRequest {
         String requestId;
         String userId;
@@ -185,8 +184,8 @@ public class EzRemedy {
     }
 
     static void initializeUsers() {
-        // Updated to include email address for the default user
-        User defaultUser = new User("USER1001", "Test Patient", "patient@example.com", "9876543210", "password123");
+        // Here is your default user for the presentation
+        User defaultUser = new User("USER1001", "Test Patient", "patient@example.com", "9876543210", "123");
         users.put("USER1001", defaultUser);
         userCounter = 1001; 
     }
@@ -290,7 +289,6 @@ public class EzRemedy {
         }
     }
 
-    // --- UPDATED: Form matches the frontend UI ---
     static void bookAppointment(Scanner scanner, String doctorId) {
         Doctor doctor = doctors.get(doctorId);
 
@@ -340,7 +338,6 @@ public class EzRemedy {
         System.out.println(">>> Status: " + appointmentRequest.status);
     }
 
-    // ... (User Appointment & Medical History methods remain identical)
     static void viewUserAppointments() {
         System.out.println("\n===== My Appointments =====");
         boolean found = false;
@@ -378,7 +375,6 @@ public class EzRemedy {
         }
     }
 
-    // --- UPDATED: Doctor Dashboard layout matched to HTML ---
     static void doctorDashboard(Scanner scanner) {
         boolean inDashboard = true;
 
@@ -471,7 +467,6 @@ public class EzRemedy {
         Scanner scanner = new Scanner(System.in);
         String date = scanner.nextLine();
 
-        // Automatically uses the patient's requested time, but doctor can override
         System.out.print("Confirm time slot (Patient requested " + req.requestedTime + "): ");
         String timeInput = scanner.nextLine();
         String finalTime = timeInput.isEmpty() ? req.requestedTime : timeInput;
@@ -506,7 +501,6 @@ public class EzRemedy {
         if (!found) System.out.println("Your schedule is clear for now.");
     }
 
-    // ... (Patient Records logic remains unchanged)
     static void managePatientRecords(Scanner scanner) {
         System.out.println("\n===== Manage Patient Records =====");
         System.out.println("1. View Patient Records");
