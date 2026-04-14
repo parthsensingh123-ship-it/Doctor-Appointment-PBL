@@ -5,190 +5,213 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EzRemedy | Unified Healthcare</title>
     <style>
-        /* Base Reset & Typography */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+        /* Base Reset & Bold Typography */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif; }
         
+        /* Fixed Photographic Background with Teal Overlay */
         body {
-            background: #042f2e;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(15, 118, 110, 0.4) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(20, 184, 166, 0.3) 0px, transparent 50%);
-            background-attachment: fixed;
             color: #ffffff;
             line-height: 1.6;
             overflow-x: hidden;
             scroll-behavior: smooth;
+            background: #042f2e;
         }
 
-        /* Typography - Bold & Clean */
-        h1 { font-size: 3.5rem; font-weight: 900; letter-spacing: -1px; line-height: 1.1; margin-bottom: 1.5rem; }
-        h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: #2dd4bf; }
+        .bg-image {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            z-index: -2;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(4, 47, 46, 0.90) 0%, rgba(15, 118, 110, 0.75) 100%);
+            z-index: -1;
+        }
+
+        /* Typography - Strictly Bold & Professional */
+        h1 { font-size: 4.5rem; font-weight: 900; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 1.5rem; text-transform: uppercase; }
+        h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; color: #2dd4bf; letter-spacing: -0.5px; text-transform: uppercase; }
         h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
-        p { font-weight: 500; color: rgba(255, 255, 255, 0.8); font-size: 1.1rem; }
+        p { font-weight: 500; color: rgba(255, 255, 255, 0.85); font-size: 1.1rem; }
 
         /* Navigation */
         header {
             position: fixed; width: 100%; top: 0; z-index: 100;
             padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center;
-            background: rgba(4, 47, 46, 0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            background: rgba(4, 47, 46, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .logo { font-size: 2rem; font-weight: 900; color: #2dd4bf; letter-spacing: -1px; }
+        .logo { font-size: 2.2rem; font-weight: 900; color: #2dd4bf; letter-spacing: -1px; text-transform: uppercase; }
 
-        /* 3D Glassmorphism Core Class */
+        /* INTENSE 3D GLASSMORPHISM CORE */
         .glass-3d {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-top: 1px solid rgba(255, 255, 255, 0.4); /* 3D light edge */
-            border-left: 1px solid rgba(255, 255, 255, 0.3); /* 3D light edge */
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);   /* 3D Edge Highlight */
+            border-left: 1px solid rgba(255, 255, 255, 0.4);  /* 3D Edge Highlight */
+            border-radius: 24px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.05);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         /* Sections Layout */
-        .section { min-height: 100vh; padding: 100px 5%; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        .section { min-height: 100vh; padding: 120px 5%; display: flex; align-items: center; justify-content: center; flex-direction: column; }
         
         /* Hero Section */
         #hero { flex-direction: row; gap: 4rem; justify-content: space-between; }
-        .hero-text { flex: 1; max-width: 600px; }
+        .hero-text { flex: 1; max-width: 700px; }
         .hero-image { flex: 1; position: relative; }
         .hero-image img {
             width: 100%; border-radius: 24px; object-fit: cover;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            border: 2px solid rgba(45, 212, 191, 0.3);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            border-top: 1px solid rgba(255,255,255,0.4);
+            border-left: 1px solid rgba(255,255,255,0.4);
         }
 
-        /* Features Section */
-        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; width: 100%; max-width: 1200px; margin-top: 3rem; }
-        .feature-card { padding: 2.5rem 2rem; text-align: center; }
-
         /* Login Portal Section */
-        .portal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; max-width: 1000px; width: 100%; margin-top: 3rem; }
-        .portal-card { padding: 4rem 3rem; text-align: center; cursor: pointer; }
+        .portal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4rem; max-width: 1200px; width: 100%; margin-top: 4rem; }
         
-        /* Magnify Effect on Hover */
+        /* MAGNIFIED HOVER LOGIC */
+        .portal-card { 
+            padding: 5rem 3rem; 
+            text-align: center; 
+            cursor: pointer; 
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portal-card::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+            transform: skewX(-25deg); transition: 0.5s;
+        }
+        
         .portal-card:hover {
-            transform: scale(1.08) translateY(-15px);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
+            transform: scale(1.08) translateY(-20px);
+            background: rgba(255, 255, 255, 0.1);
             border-top: 1px solid rgba(45, 212, 191, 0.8);
-            border-left: 1px solid rgba(45, 212, 191, 0.6);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(45, 212, 191, 0.2);
+            border-left: 1px solid rgba(45, 212, 191, 0.8);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), inset 0 0 30px rgba(45, 212, 191, 0.2);
+        }
+        
+        .portal-card:hover::before { left: 200%; }
+
+        .card-img {
+            width: 100px; height: 100px; border-radius: 50%; object-fit: cover;
+            margin-bottom: 1.5rem; border: 3px solid #2dd4bf;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
         /* Dashboards */
         .dashboard-container { display: none; padding: 120px 5% 50px; min-height: 100vh; align-items: flex-start; justify-content: center; }
-        .dashboard { width: 100%; max-width: 900px; padding: 3rem; animation: slideUp 0.6s ease; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .dashboard { width: 100%; max-width: 1000px; padding: 4rem; animation: slideUp 0.6s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+
+        .dashboard-header { border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 2rem; margin-bottom: 2rem; }
+        .dashboard-header h2 { color: #2dd4bf; font-size: 2.5rem; }
 
         /* Lists */
-        .item-list { list-style: none; margin-top: 1.5rem; }
+        .item-list { list-style: none; margin-top: 2rem; }
         .list-item {
-            display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; margin-bottom: 1rem;
-            background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;
-            transition: border-color 0.3s ease;
+            display: flex; justify-content: space-between; align-items: center; padding: 2rem; margin-bottom: 1.5rem;
+            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 16px;
+            transition: all 0.3s ease;
         }
-        .list-item:hover { border-color: #2dd4bf; background: rgba(0, 0, 0, 0.4); }
-        .item-info h4 { font-size: 1.3rem; color: #fff; }
-        .status-badge { display: inline-block; padding: 0.35rem 0.85rem; border-radius: 6px; font-size: 0.85rem; font-weight: 800; background: rgba(245, 158, 11, 0.2); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.5); margin-top: 0.5rem; }
+        .list-item:hover { border-color: #2dd4bf; background: rgba(0, 0, 0, 0.6); transform: translateX(10px); }
+        .item-info h4 { font-size: 1.5rem; color: #fff; text-transform: uppercase; }
+        .status-badge { display: inline-block; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 800; background: rgba(245, 158, 11, 0.2); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.5); margin-top: 0.5rem; text-transform: uppercase; }
 
         /* Buttons */
         .btn {
-            background: #2dd4bf; color: #042f2e; border: none; padding: 1rem 2rem; border-radius: 8px;
-            font-size: 1.1rem; font-weight: 800; cursor: pointer; transition: all 0.3s ease; width: 100%; text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(45, 212, 191, 0.3);
+            background: #2dd4bf; color: #042f2e; border: none; padding: 1.2rem 2rem; border-radius: 12px;
+            font-size: 1.2rem; font-weight: 900; cursor: pointer; transition: all 0.3s ease; width: 100%; text-transform: uppercase;
+            box-shadow: 0 10px 20px rgba(45, 212, 191, 0.3);
         }
-        .btn:hover { background: #14b8a6; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(45, 212, 191, 0.5); }
-        .btn-outline { background: transparent; color: #2dd4bf; border: 2px solid #2dd4bf; margin-top: 1rem; }
+        .btn:hover { background: #14b8a6; transform: translateY(-5px); box-shadow: 0 15px 30px rgba(45, 212, 191, 0.5); }
+        .btn-outline { background: transparent; color: #2dd4bf; border: 2px solid #2dd4bf; margin-top: 1.5rem; }
         .btn-outline:hover { background: #2dd4bf; color: #042f2e; }
-        .btn-small { width: auto; padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+        .btn-small { width: auto; padding: 0.8rem 1.5rem; font-size: 1rem; }
         .btn-danger { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid #ef4444; margin-left: 0.5rem; box-shadow: none;}
         .btn-danger:hover { background: #ef4444; color: #fff; }
 
         /* Modals */
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px);
-            display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1000;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(15px);
+            display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.4s ease; z-index: 1000;
         }
         .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content { padding: 3rem; width: 100%; max-width: 500px; transform: scale(0.9) translateY(20px); opacity: 0; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .modal-content { padding: 4rem; width: 100%; max-width: 550px; transform: scale(0.8) translateY(50px); opacity: 0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .modal-overlay.active .modal-content { transform: scale(1) translateY(0); opacity: 1; }
-        .close-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: rgba(255, 255, 255, 0.5); cursor: pointer; }
-        .close-btn:hover { color: #fff; }
+        .close-btn { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; font-size: 2.5rem; color: rgba(255, 255, 255, 0.5); cursor: pointer; font-weight: 300;}
+        .close-btn:hover { color: #fff; transform: rotate(90deg); transition: 0.3s; }
 
         /* Forms */
         .form-group { margin-bottom: 1.5rem; text-align: left; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 800; color: #2dd4bf; font-size: 0.9rem; text-transform: uppercase; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 800; color: #2dd4bf; font-size: 1rem; text-transform: uppercase; }
         .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 1rem; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; font-size: 1rem; color: #fff; transition: all 0.3s ease;
+            width: 100%; padding: 1.2rem; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 12px; font-size: 1.1rem; color: #fff; transition: all 0.3s ease; font-weight: 500;
         }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #2dd4bf; background: rgba(0, 0, 0, 0.5); box-shadow: 0 0 0 2px rgba(45, 212, 191, 0.2); }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #2dd4bf; background: rgba(0, 0, 0, 0.6); box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.3); }
         .form-group option { background: #042f2e; color: #fff; }
 
         /* Scroll Animations */
-        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease; }
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* Responsive */
         @media(max-width: 900px) {
             #hero { flex-direction: column; text-align: center; padding-top: 150px; }
-            .features-grid, .portal-grid { grid-template-columns: 1fr; }
-            .list-item { flex-direction: column; gap: 1rem; align-items: flex-start; }
+            .portal-grid { grid-template-columns: 1fr; }
+            .list-item { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+            h1 { font-size: 3rem; }
         }
     </style>
 </head>
 <body>
 
+    <div class="bg-image"></div>
+    <div class="bg-overlay"></div>
+
     <header>
         <div class="logo">EzRemedy</div>
-        <div style="font-weight: 800; color: rgba(255,255,255,0.6);" id="headerStatus">SECURE HEALTH NETWORK</div>
+        <div style="font-weight: 800; color: rgba(255,255,255,0.7); letter-spacing: 1.5px; text-transform: uppercase;" id="headerStatus">SECURE SYSTEM ACTIVE</div>
     </header>
 
     <div id="landingPage">
         
         <section id="hero" class="section">
             <div class="hero-text reveal active">
-                <h1>Healthcare,<br>Simplified.</h1>
-                <p style="margin-bottom: 2rem;">Skip the waiting room. Connect with top specialists, manage your medical history, and book appointments instantly through our secure platform.</p>
-                <button class="btn" onclick="document.getElementById('portal').scrollIntoView();" style="width: auto;">ACCESS PORTALS</button>
+                <h1>The Future of<br>Healthcare Access.</h1>
+                <p style="margin-bottom: 2.5rem; font-size: 1.3rem;">Bypass the waiting room. Connect with top-tier medical specialists, manage your health history, and secure appointments through our unified digital platform.</p>
+                <button class="btn" onclick="document.getElementById('portal').scrollIntoView();" style="width: auto;">ACCESS SECURE PORTALS</button>
             </div>
             <div class="hero-image reveal active">
-                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80" alt="Medical Professional">
-            </div>
-        </section>
-
-        <section id="features" class="section" style="background: rgba(0,0,0,0.1);">
-            <h2 class="reveal">Why Choose EzRemedy?</h2>
-            <div class="features-grid">
-                <div class="feature-card glass-3d reveal">
-                    <h3>Smart Booking</h3>
-                    <p>Instantly view available time slots for specialists and book without phone calls.</p>
-                </div>
-                <div class="feature-card glass-3d reveal">
-                    <h3>Digital Records</h3>
-                    <p>Your complete medical history and prescriptions stored securely in one place.</p>
-                </div>
-                <div class="feature-card glass-3d reveal">
-                    <h3>Verified Doctors</h3>
-                    <p>Connect only with certified professionals for online or in-person visits.</p>
-                </div>
+                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=1000&auto=format&fit=crop" alt="Advanced Medical Interface">
             </div>
         </section>
 
         <section id="portal" class="section">
-            <h2 class="reveal">Secure Access Portals</h2>
-            <p class="reveal">Select your role to authenticate with the backend system.</p>
+            <h2 class="reveal" style="font-size: 3rem;">AUTHENTICATION GATEWAY</h2>
+            <p class="reveal" style="font-size: 1.2rem; margin-bottom: 2rem;">Select your designated role to interface with the backend architecture.</p>
+            
             <div class="portal-grid">
                 <div class="portal-card glass-3d reveal" onclick="openModal('loginUser')">
-                    <h2>PATIENT LOGIN</h2>
-                    <p>Access your medical history, browse available specialists, and manage appointments.</p>
-                    <button class="btn">AUTHENTICATE</button>
+                    <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=200&auto=format&fit=crop" alt="Patient Access" class="card-img">
+                    <h2>PATIENT PORTAL</h2>
+                    <p style="margin-bottom: 3rem;">Access comprehensive medical history, browse verified specialists, and manage your consultation schedule.</p>
+                    <button class="btn">PATIENT LOGIN</button>
                 </div>
+                
                 <div class="portal-card glass-3d reveal" onclick="openModal('loginDoctor')">
-                    <h2>PROVIDER LOGIN</h2>
-                    <p>Manage patient records, view pending requests, and organize your daily schedule.</p>
-                    <button class="btn btn-outline">AUTHENTICATE</button>
+                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=200&auto=format&fit=crop" alt="Doctor Access" class="card-img">
+                    <h2>PROVIDER PORTAL</h2>
+                    <p style="margin-bottom: 3rem;">Review encrypted patient records, evaluate pending requests, and orchestrate your daily clinical schedule.</p>
+                    <button class="btn btn-outline">PROVIDER LOGIN</button>
                 </div>
             </div>
         </section>
@@ -196,94 +219,94 @@
     </div> <div id="userDashboard" class="dashboard-container">
         <div class="dashboard glass-3d">
             <div class="dashboard-header">
-                <h2>WELCOME, USER1001 (TEST PATIENT)</h2>
-                <p>Select a specialist below to fill out an appointment request form.</p>
+                <h2>PATIENT: USER1001 (TEST)</h2>
+                <p style="font-size: 1.2rem;">Select a certified specialist below to generate an appointment request.</p>
             </div>
             
             <ul class="item-list">
                 <li class="list-item">
                     <div class="item-info">
                         <h4>DR. RAJESH KUMAR</h4>
-                        <p>CARDIOLOGY | CONSULTATION: RS. 500</p>
+                        <p>DEPARTMENT: CARDIOLOGY | FEE: RS. 500</p>
                     </div>
-                    <button class="btn btn-small" onclick="openBookingForm('DOC5001', 'DR. RAJESH KUMAR')">REQUEST SLOT</button>
+                    <button class="btn btn-small" onclick="openBookingForm('DOC5001', 'DR. RAJESH KUMAR')">INITIATE REQUEST</button>
                 </li>
                 <li class="list-item">
                     <div class="item-info">
                         <h4>DR. PRIYA SHARMA</h4>
-                        <p>DERMATOLOGY | CONSULTATION: RS. 400</p>
+                        <p>DEPARTMENT: DERMATOLOGY | FEE: RS. 400</p>
                     </div>
-                    <button class="btn btn-small" onclick="openBookingForm('DOC5002', 'DR. PRIYA SHARMA')">REQUEST SLOT</button>
+                    <button class="btn btn-small" onclick="openBookingForm('DOC5002', 'DR. PRIYA SHARMA')">INITIATE REQUEST</button>
                 </li>
             </ul>
-            <button class="btn btn-outline" onclick="logout()" style="width: 200px; margin-top: 2rem;">TERMINATE SESSION</button>
+            <button class="btn btn-outline" onclick="logout()" style="width: 250px; margin-top: 3rem;">TERMINATE SECURE SESSION</button>
         </div>
     </div>
 
     <div id="doctorDashboard" class="dashboard-container">
         <div class="dashboard glass-3d">
             <div class="dashboard-header">
-                <h2>DR. RAJESH KUMAR'S DASHBOARD</h2>
-                <p>CARDIOLOGY | ID: DOC5001</p>
+                <h2>DR. RAJESH KUMAR</h2>
+                <p style="font-size: 1.2rem;">CARDIOLOGY SPECIALIST | SYSTEM ID: DOC5001</p>
             </div>
             
-            <h3 style="color: #2dd4bf; margin-top: 1.5rem;">PENDING REQUESTS</h3>
+            <h3 style="color: #2dd4bf; margin-top: 2rem; font-size: 1.8rem;">ACTION REQUIRED: PENDING REQUESTS</h3>
             <ul class="item-list">
                 <li class="list-item">
                     <div class="item-info">
-                        <h4>PATIENT: USER1001 (TEST PATIENT)</h4>
-                        <p><strong>PROBLEM:</strong> Experiencing mild chest palpitations.</p>
-                        <p><strong>TYPE:</strong> IN-PERSON | <strong>REQUESTED SLOT:</strong> 10:00 AM</p>
-                        <span class="status-badge">PENDING APPROVAL</span>
+                        <h4>PATIENT ID: USER1001 (TEST PATIENT)</h4>
+                        <p style="margin: 0.5rem 0;"><strong>MEDICAL COMPLAINT:</strong> Experiencing mild chest palpitations.</p>
+                        <p><strong>FORMAT:</strong> IN-PERSON | <strong>REQUESTED SLOT:</strong> 10:00 AM</p>
+                        <span class="status-badge">AWAITING APPROVAL</span>
                     </div>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button class="btn btn-small" onclick="alert('System Alert: Appointment Approved and synchronized with schedule.')">APPROVE</button>
-                        <button class="btn btn-small btn-danger" onclick="alert('System Alert: Appointment Rejected.')">REJECT</button>
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn btn-small" onclick="alert('SYSTEM NOTIFICATION: Appointment formally approved and embedded into clinical schedule.')">APPROVE</button>
+                        <button class="btn btn-small btn-danger" onclick="alert('SYSTEM NOTIFICATION: Appointment request securely rejected.')">REJECT</button>
                     </div>
                 </li>
             </ul>
 
-            <h3 style="color: #2dd4bf; margin-top: 3rem;">CONFIRMED SCHEDULE</h3>
+            <h3 style="color: #2dd4bf; margin-top: 4rem; font-size: 1.8rem;">CLINICAL SCHEDULE</h3>
             <ul class="item-list">
                 <li class="list-item">
                     <div class="item-info">
-                        <h4>PATIENT: USER0892 (RAHUL VERMA)</h4>
-                        <p>Follow-up on ECG Report</p>
-                        <p>02:00 PM | ONLINE CONSULTATION</p>
+                        <h4>PATIENT ID: USER0892 (RAHUL VERMA)</h4>
+                        <p style="margin: 0.5rem 0;">PURPOSE: Follow-up on recent ECG Diagnostics</p>
+                        <p>02:00 PM | SECURE ONLINE CONSULTATION</p>
                     </div>
                 </li>
             </ul>
 
-            <button class="btn btn-outline" onclick="logout()" style="width: 200px; margin-top: 2rem;">TERMINATE SESSION</button>
+            <button class="btn btn-outline" onclick="logout()" style="width: 250px; margin-top: 3rem;">TERMINATE SECURE SESSION</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="mainOverlay">
         <div class="modal-content glass-3d">
             <button class="close-btn" onclick="closeModal()">&times;</button>
-            <h2 class="modal-title" id="modalTitle">MODAL</h2>
+            <h2 class="modal-title" id="modalTitle">SYSTEM MODAL</h2>
             <form id="dynamicForm">
                 </form>
         </div>
     </div>
 
     <script>
-        // Scroll Reveal Animation Logic
+        // Scroll Reveal Animation Initialization
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 100;
+                var elementVisible = 150;
                 if (elementTop < windowHeight - elementVisible) {
                     reveals[i].classList.add("active");
                 }
             }
         }
         window.addEventListener("scroll", reveal);
-        reveal(); // Trigger on load
+        reveal(); 
 
-        // App Logic
+        // Core Application Logic
         const overlay = document.getElementById('mainOverlay');
         const modalTitle = document.getElementById('modalTitle');
         const dynamicForm = document.getElementById('dynamicForm');
@@ -300,18 +323,18 @@
             dynamicForm.innerHTML = ''; 
 
             if (type === 'loginUser') {
-                modalTitle.innerText = "PATIENT LOGIN";
+                modalTitle.innerText = "PATIENT AUTHENTICATION";
                 dynamicForm.innerHTML = `
-                    <div class="form-group"><label>USER ID</label><input type="text" value="USER1001" required></div>
-                    <div class="form-group"><label>PASSWORD</label><input type="password" value="123" required></div>
-                    <button type="submit" class="btn">SECURE LOGIN</button>
+                    <div class="form-group"><label>SECURE USER ID</label><input type="text" value="USER1001" required></div>
+                    <div class="form-group"><label>ENCRYPTED PASSWORD</label><input type="password" value="123" required></div>
+                    <button type="submit" class="btn">VERIFY IDENTITY</button>
                 `;
             } else if (type === 'loginDoctor') {
-                modalTitle.innerText = "PROVIDER LOGIN";
+                modalTitle.innerText = "PROVIDER AUTHENTICATION";
                 dynamicForm.innerHTML = `
-                    <div class="form-group"><label>DOCTOR ID</label><input type="text" value="DOC5001" required></div>
-                    <div class="form-group"><label>PASSWORD</label><input type="password" value="doc123" required></div>
-                    <button type="submit" class="btn">SECURE LOGIN</button>
+                    <div class="form-group"><label>SECURE DOCTOR ID</label><input type="text" value="DOC5001" required></div>
+                    <div class="form-group"><label>ENCRYPTED PASSWORD</label><input type="password" value="doc123" required></div>
+                    <button type="submit" class="btn">VERIFY CREDENTIALS</button>
                 `;
             }
             overlay.classList.add('active');
@@ -319,25 +342,25 @@
 
         function openBookingForm(docId, docName) {
             currentFormType = 'bookingForm';
-            modalTitle.innerText = "BOOK: " + docName;
+            modalTitle.innerText = "SECURE BOOKING: " + docName;
             dynamicForm.innerHTML = `
                 <div class="form-group">
-                    <label>EMAIL ADDRESS</label>
+                    <label>VERIFIED EMAIL ADDRESS</label>
                     <input type="email" value="patient@example.com" required>
                 </div>
                 <div class="form-group">
-                    <label>MEDICAL COMPLAINT</label>
-                    <textarea placeholder="Describe symptoms securely..." required></textarea>
+                    <label>DETAILED MEDICAL COMPLAINT</label>
+                    <textarea placeholder="Describe symptoms. Data is securely processed..." required></textarea>
                 </div>
                 <div class="form-group">
-                    <label>CONSULTATION TYPE</label>
+                    <label>CONSULTATION FORMAT</label>
                     <select required>
                         <option value="Online">ONLINE / TELEHEALTH</option>
                         <option value="In-Person">IN-PERSON CLINIC VISIT</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>PREFERRED TIME SLOT</label>
+                    <label>PREFERRED TIME ALLOCATION</label>
                     <select required>
                         <option value="09:00 AM">09:00 AM</option>
                         <option value="10:00 AM">10:00 AM</option>
@@ -347,7 +370,7 @@
                         <option value="04:00 PM">04:00 PM</option>
                     </select>
                 </div>
-                <button type="submit" class="btn">TRANSMIT REQUEST</button>
+                <button type="submit" class="btn">TRANSMIT SECURE DATA</button>
             `;
             overlay.classList.add('active');
         }
@@ -356,7 +379,7 @@
             overlay.classList.remove('active');
         }
 
-        // Handle Form Submissions
+        // Form Routing Logic
         dynamicForm.addEventListener('submit', function(e) {
             e.preventDefault();
             closeModal();
@@ -366,19 +389,19 @@
                 doctorDashboard.style.display = 'none';
                 userDashboard.style.display = 'flex';
                 window.scrollTo(0,0);
-                headerStatus.innerText = "PATIENT DASHBOARD ACTIVE";
+                headerStatus.innerText = "PATIENT PROTOCOL ACTIVE";
             } 
             else if (currentFormType === 'loginDoctor') {
                 landingPage.style.display = 'none';
                 userDashboard.style.display = 'none';
                 doctorDashboard.style.display = 'flex';
                 window.scrollTo(0,0);
-                headerStatus.innerText = "PROVIDER DASHBOARD ACTIVE";
+                headerStatus.innerText = "PROVIDER PROTOCOL ACTIVE";
             }
             else if (currentFormType === 'bookingForm') {
                 setTimeout(() => {
-                    alert("System Alert: Your medical details and slot request have been successfully transmitted.");
-                }, 300);
+                    alert("SYSTEM NOTIFICATION: Your medical data and slot request have been encrypted and transmitted successfully.");
+                }, 400);
             }
         });
 
@@ -386,7 +409,7 @@
             userDashboard.style.display = 'none';
             doctorDashboard.style.display = 'none';
             landingPage.style.display = 'block';
-            headerStatus.innerText = "SECURE HEALTH NETWORK";
+            headerStatus.innerText = "SECURE SYSTEM STANDBY";
             window.scrollTo(0,0);
         }
     </script>
