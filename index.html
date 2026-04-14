@@ -19,7 +19,7 @@
         /* Full Background Image with Dark Gradient Overlay */
         .bg-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
-            background: url('https://images.unsplash.com/photo-1538108149393-cebb66405bc0?q=80&w=2000&auto=format&fit=crop') no-repeat center center;
+            background: url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=2000&q=80') no-repeat center center;
             background-size: cover;
         }
 
@@ -62,7 +62,18 @@
         .hero { display: flex; align-items: center; justify-content: space-between; gap: 4rem; min-height: 80vh; }
         .hero-text { flex: 1; }
         .hero-image { flex: 1; text-align: right; }
-        .hero-image img { width: 100%; max-width: 500px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); border: 2px solid rgba(45, 212, 191, 0.3); }
+        
+        /* Added background color fallback for image */
+        .hero-image img { 
+            width: 100%; 
+            max-width: 500px; 
+            border-radius: 20px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4); 
+            border: 2px solid rgba(45, 212, 191, 0.3);
+            background-color: rgba(0,0,0,0.2);
+            min-height: 300px;
+            object-fit: cover;
+        }
 
         .portals-section { text-align: center; margin-top: 4rem; padding-bottom: 5rem;}
         .portal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem; margin-top: 3rem; }
@@ -83,7 +94,7 @@
 
         /* --- DASHBOARD WEB APP LAYOUT --- */
         .dashboard-wrapper {
-            display: none; /* Hidden on load */
+            display: none; 
             max-width: 1400px;
             margin: 100px auto 0;
             padding: 0 2rem;
@@ -118,7 +129,7 @@
         .tab-section { display: none; }
         .tab-section.active { display: block; animation: fadeIn 0.4s ease; }
         
-        /* List Items (Records, Appointments, Doctors) */
+        /* List Items */
         .data-card {
             background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
             padding: 1.5rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;
@@ -168,7 +179,7 @@
                     <button class="btn" onclick="document.getElementById('portalsSection').scrollIntoView({behavior: 'smooth'});">Get Started</button>
                 </div>
                 <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1576091160550-2173ff9e5ee5?q=80&w=1000&auto=format&fit=crop" alt="Doctor and Patient">
+                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=1000&q=80" alt="Doctor and Patient">
                 </div>
             </div>
 
@@ -267,7 +278,6 @@
         </div>
     </div>
 
-
     <div class="dashboard-wrapper" id="doctorView" style="display: none;">
         <div class="glass-panel sidebar">
             <div class="profile-card">
@@ -345,7 +355,6 @@
         let currentMode = '';
         let isOnline = true;
 
-        // Modals Logic
         function openModal(type) {
             currentMode = type;
             if (type === 'loginUser') {
@@ -380,7 +389,6 @@
 
         function closeModal() { overlay.classList.remove('active'); }
 
-        // Form Submit Routing
         dynamicForm.addEventListener('submit', (e) => {
             e.preventDefault();
             closeModal();
@@ -395,9 +403,7 @@
             }
         });
 
-        // Dashboard Tab Switching Logic
         function switchTab(role, tabId) {
-            // Remove active class from all buttons and sections in that role
             const view = role === 'patient' ? patientView : doctorView;
             const buttons = view.querySelectorAll('.nav-btn:not(.btn-danger):not([onclick="toggleStatus()"])');
             const sections = view.querySelectorAll('.tab-section');
@@ -405,12 +411,10 @@
             buttons.forEach(btn => btn.classList.remove('active'));
             sections.forEach(sec => sec.classList.remove('active'));
 
-            // Add active class to clicked button and target section
             event.currentTarget.classList.add('active');
             document.getElementById(tabId).classList.add('active');
         }
 
-        // Doctor Status Toggle
         function toggleStatus() {
             isOnline = !isOnline;
             const badge = document.getElementById('docStatusBadge');
