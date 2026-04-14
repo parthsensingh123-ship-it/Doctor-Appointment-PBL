@@ -13,6 +13,8 @@ public class EzRemedy {
         String problem;
         String consultationType;
         List<String> medicalHistory;
+        List<String> pastIllnesses;
+        List<String> medicationReminders;
 
         User(String userId, String name, String email, String phone, String password) {
             this.userId = userId;
@@ -21,6 +23,8 @@ public class EzRemedy {
             this.phone = phone;
             this.password = password;
             this.medicalHistory = new ArrayList<>();
+            this.pastIllnesses = new ArrayList<>();
+            this.medicationReminders = new ArrayList<>();
         }
     }
 
@@ -33,6 +37,7 @@ public class EzRemedy {
         String password;
         double latitude;
         double longitude;
+        boolean isAvailable; 
         List<String> availableSlots;
         List<AppointmentRequest> pendingRequests;
         List<Appointment> appointments;
@@ -47,6 +52,7 @@ public class EzRemedy {
             this.password = password;
             this.latitude = latitude;
             this.longitude = longitude;
+            this.isAvailable = true; // Default to online
             this.availableSlots = new ArrayList<>();
             this.pendingRequests = new ArrayList<>();
             this.appointments = new ArrayList<>();
@@ -184,8 +190,14 @@ public class EzRemedy {
     }
 
     static void initializeUsers() {
-        // Here is your default user for the presentation
         User defaultUser = new User("USER1001", "Test Patient", "patient@example.com", "9876543210", "123");
+        
+        // Adding dummy data for presentation
+        defaultUser.pastIllnesses.add("Mild Asthma (Diagnosed 2018)");
+        defaultUser.pastIllnesses.add("Appendectomy (2021)");
+        defaultUser.medicationReminders.add("Albuterol Inhaler - 2 puffs as needed");
+        defaultUser.medicationReminders.add("Vitamin D3 - 1 tablet after breakfast");
+        
         users.put("USER1001", defaultUser);
         userCounter = 1001; 
     }
@@ -233,16 +245,19 @@ public class EzRemedy {
         userDashboard(scanner);
     }
 
+    // --- EXPANDED PATIENT DASHBOARD ---
     static void userDashboard(Scanner scanner) {
         boolean inDashboard = true;
 
         while (inDashboard) {
-            System.out.println("\n===== Patient Dashboard =====");
-            System.out.println("Welcome, " + currentUser.name + " (" + currentUser.userId + ")");
+            System.out.println("\n=========================================");
+            System.out.println("   PATIENT DASHBOARD: " + currentUser.name.toUpperCase());
+            System.out.println("=========================================");
             System.out.println("1. Browse Specialists & Request Slot");
-            System.out.println("2. View My Appointments");
-            System.out.println("3. View Medical History");
-            System.out.println("4. Logout");
+            System.out.println("2. Appointment Reminders");
+            System.out.println("3. Personal Medical Records & History");
+            System.out.println("4. Medication Reminders");
+            System.out.println("5. Logout");
             System.out.print("Choose an option: ");
 
             String choice = scanner.nextLine();
@@ -255,9 +270,12 @@ public class EzRemedy {
                     viewUserAppointments();
                     break;
                 case "3":
-                    viewMedicalHistory();
+                    viewMedicalProfile();
                     break;
                 case "4":
+                    manageMedicationReminders(scanner);
+                    break;
+                case "5":
                     inDashboard = false;
                     currentUser = null;
                     break;
@@ -269,23 +287,29 @@ public class EzRemedy {
 
     static void browseDoctors(Scanner scanner) {
         System.out.println("\n===== Available Specialists =====");
-        displayDoctors(new ArrayList<>(doctors.values()));
+        
+        boolean doctorsAvailable = false;
+        for (Doctor doc : doctors.values()) {
+            if (doc.isAvailable) {
+                System.out.println("[" + doc.doctorId + "] " + doc.name + " | " + doc.specialization + " | Rs. " + doc.consultationCharge);
+                doctorsAvailable = true;
+            }
+        }
+
+        if (!doctorsAvailable) {
+            System.out.println("No doctors are currently online.");
+            return;
+        }
 
         System.out.print("\nEnter Doctor ID to book appointment (or 'back' to cancel): ");
         String doctorId = scanner.nextLine();
 
         if (doctorId.equalsIgnoreCase("back")) return;
 
-        if (doctors.containsKey(doctorId)) {
+        if (doctors.containsKey(doctorId) && doctors.get(doctorId).isAvailable) {
             bookAppointment(scanner, doctorId);
         } else {
-            System.out.println("Invalid Doctor ID!");
-        }
-    }
-
-    static void displayDoctors(List<Doctor> docList) {
-        for (Doctor doc : docList) {
-            System.out.println("[" + doc.doctorId + "] " + doc.name + " | " + doc.specialization + " | Rs. " + doc.consultationCharge);
+            System.out.println("Invalid Doctor ID or Doctor is offline!");
         }
     }
 
@@ -339,7 +363,7 @@ public class EzRemedy {
     }
 
     static void viewUserAppointments() {
-        System.out.println("\n===== My Appointments =====");
+        System.out.println("\n===== Appointment Reminders =====");
         boolean found = false;
         for (Appointment appt : appointments) {
             if (appt.userId.equals(currentUser.userId)) {
@@ -348,15 +372,50 @@ public class EzRemedy {
                 found = true;
             }
         }
-        if (!found) System.out.println("No confirmed appointments found.");
+        if (!found) System.out.println("No upcoming appointments.");
     }
 
-    static void viewMedicalHistory() {
-        System.out.println("\n===== Medical History =====");
+    // --- NEW: Detailed Medical Profile Method ---
+    static void viewMedicalProfile() {
+        System.out.println("\n===== Personal Medical Profile =====");
+        System.out.println("Patient Name: " + currentUser.name);
+        System.out.println("Contact: " + currentUser.phone + " | " + currentUser.email);
+        
+        System.out.println("\n--- Past Illnesses & Conditions ---");
+        if (currentUser.pastIllnesses.isEmpty()) {
+            System.out.println("No past illnesses recorded.");
+        } else {
+            for (String illness : currentUser.pastIllnesses) System.out.println("- " + illness);
+        }
+
+        System.out.println("\n--- Doctor Prescriptions & Records ---");
         if (currentUser.medicalHistory.isEmpty()) {
             System.out.println("No medical records found.");
         } else {
             for (String record : currentUser.medicalHistory) System.out.println(record);
+        }
+    }
+
+    // --- NEW: Medication Reminders Method ---
+    static void manageMedicationReminders(Scanner scanner) {
+        System.out.println("\n===== Medication Reminders =====");
+        if (currentUser.medicationReminders.isEmpty()) {
+            System.out.println("No active medication reminders.");
+        } else {
+            for (int i = 0; i < currentUser.medicationReminders.size(); i++) {
+                System.out.println((i + 1) + ". " + currentUser.medicationReminders.get(i));
+            }
+        }
+
+        System.out.println("\nOptions: 1. Add Reminder | 2. Go Back");
+        System.out.print("Choose: ");
+        String choice = scanner.nextLine();
+
+        if (choice.equals("1")) {
+            System.out.print("Enter Medication Name & Schedule (e.g., Aspirin - 1 pill morning): ");
+            String med = scanner.nextLine();
+            currentUser.medicationReminders.add(med);
+            System.out.println("Reminder added successfully!");
         }
     }
 
@@ -375,16 +434,21 @@ public class EzRemedy {
         }
     }
 
+    // --- EXPANDED DOCTOR DASHBOARD ---
     static void doctorDashboard(Scanner scanner) {
         boolean inDashboard = true;
 
         while (inDashboard) {
-            System.out.println("\n===== " + currentDoctor.name + "'s Dashboard =====");
-            System.out.println(currentDoctor.specialization + " | ID: " + currentDoctor.doctorId);
+            System.out.println("\n=========================================");
+            System.out.println("   WELCOME, " + currentDoctor.name.toUpperCase() + "!");
+            System.out.println("=========================================");
+            String statusStr = currentDoctor.isAvailable ? "ONLINE (Accepting Patients)" : "OFFLINE (Not Accepting Patients)";
+            System.out.println("Current Status: [" + statusStr + "]");
             System.out.println("\n1. View Pending Requests (" + currentDoctor.pendingRequests.size() + " new)");
-            System.out.println("2. View Today's Confirmed Schedule");
+            System.out.println("2. Today's Schedule & Meetings");
             System.out.println("3. Manage Patient Medical Records");
-            System.out.println("4. Logout");
+            System.out.println("4. Toggle Availability (Go Offline/Online)");
+            System.out.println("5. Logout");
             System.out.print("Choose an action: ");
 
             String choice = scanner.nextLine();
@@ -400,6 +464,10 @@ public class EzRemedy {
                     managePatientRecords(scanner);
                     break;
                 case "4":
+                    currentDoctor.isAvailable = !currentDoctor.isAvailable;
+                    System.out.println(">>> Status changed to: " + (currentDoctor.isAvailable ? "ONLINE" : "OFFLINE"));
+                    break;
+                case "5":
                     inDashboard = false;
                     currentDoctor = null;
                     break;
